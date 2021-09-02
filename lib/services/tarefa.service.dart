@@ -1,7 +1,7 @@
 import 'package:tarefas_app/entities/tarefa.dart';
 import 'package:tarefas_app/repositories/tarefa-memory.repository.dart';
 
-// lógica do negócio.
+// lógica do negócio ~ BLOC
 class TarefaService {
   var repository = new TarefaMemoryRepository();
 
@@ -10,7 +10,7 @@ class TarefaService {
   }
 
   List<Tarefa> read() {
-    return repository.tarefas;
+    return TarefaMemoryRepository.tarefas;
   }
 
   void delete(Tarefa entity) {

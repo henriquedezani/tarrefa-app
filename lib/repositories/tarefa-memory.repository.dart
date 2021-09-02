@@ -2,7 +2,7 @@ import 'package:tarefas_app/entities/tarefa.dart';
 
 class TarefaMemoryRepository {
   // atributo
-  late List<Tarefa> tarefas;
+  static List<Tarefa> tarefas = [];
 
   // construtor
   TarefaMemoryRepository() {

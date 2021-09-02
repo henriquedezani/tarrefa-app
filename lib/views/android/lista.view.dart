@@ -8,7 +8,8 @@ class ListaView extends StatefulWidget {
 }
 
 class _ListaViewState extends State<ListaView> {
-  final List<Tarefa> lista = [];
+  // atributo da classe.
+  List<Tarefa> lista = [];
 
   @override
   initState() {
@@ -42,7 +43,12 @@ class _ListaViewState extends State<ListaView> {
       ),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
-        onPressed: () {},
+        onPressed: () async {
+          await Navigator.of(context).pushNamed('/create');
+          setState(() {
+            lista = TarefaService().read();
+          });
+        },
       ),
     );
   }
