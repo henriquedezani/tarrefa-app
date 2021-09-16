@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:tarefas_app/entities/tarefa.dart';
 import 'package:tarefas_app/services/tarefa.service.dart';
 
@@ -18,7 +19,8 @@ class CreateView extends StatelessWidget {
               if (_formKey.currentState!.validate()) {
                 _formKey.currentState?.save();
                 var tarefa = Tarefa(id: 1, texto: descricao!);
-                var service = TarefaService();
+                var service =
+                    Provider.of<TarefaService>(context, listen: false);
                 service.create(tarefa);
                 Navigator.of(context).pop();
               }

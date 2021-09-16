@@ -2,15 +2,15 @@ import 'package:tarefas_app/entities/tarefa.dart';
 
 class TarefaMemoryRepository {
   // atributo
-  static List<Tarefa> tarefas = [];
+  List<Tarefa> tarefas = [];
 
   // construtor
   TarefaMemoryRepository() {
-    tarefas = [];
-    tarefas
-        .add(Tarefa(id: 1, texto: 'Passear com o cachorro', finalizada: false));
-    tarefas.add(Tarefa(id: 2, texto: 'Estudar para prova', finalizada: false));
-    tarefas.add(Tarefa(id: 3, texto: 'Fazer a matrícula', finalizada: true));
+    // tarefas = [];
+    // tarefas
+    //     .add(Tarefa(id: 1, texto: 'Passear com o cachorro', finalizada: false));
+    // tarefas.add(Tarefa(id: 2, texto: 'Estudar para prova', finalizada: false));
+    // tarefas.add(Tarefa(id: 3, texto: 'Fazer a matrícula', finalizada: true));
   }
 
   // métodos:

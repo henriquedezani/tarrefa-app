@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:tarefas_app/entities/tarefa.dart';
 import 'package:tarefas_app/services/tarefa.service.dart';
 
@@ -9,13 +10,13 @@ class ListaView extends StatefulWidget {
 
 class _ListaViewState extends State<ListaView> {
   // atributo da classe.
-  List<Tarefa> lista = [];
+  // List<Tarefa> lista = [];
 
   @override
   initState() {
     super.initState();
-    var service = TarefaService();
-    lista.addAll(service.read());
+    // var service = TarefaService();
+    // lista.addAll(service.read());
   }
 
   @override
@@ -24,30 +25,29 @@ class _ListaViewState extends State<ListaView> {
       appBar: AppBar(
         title: Text("Tarefas"),
       ),
-      body: RefreshIndicator(
-        child: ListView.builder(
-          itemCount: lista.length,
-          itemBuilder: (_, index) {
-            return CheckboxListTile(
-              value: lista[index].finalizada,
-              title: Text(lista[index].texto),
-              onChanged: (value) {
-                setState(() {
-                  lista[index].finalizada = value ?? true;
-                });
-              },
-            );
-          },
-        ),
-        onRefresh: () => Future.value(true),
+      body: Consumer<TarefaService>(
+        builder: (context, service, child) {
+          var lista = service.tarefas;
+          return ListView.builder(
+            itemCount: lista.length,
+            itemBuilder: (_, index) {
+              return CheckboxListTile(
+                value: lista[index].finalizada,
+                title: Text(lista[index].texto),
+                onChanged: (value) {
+                  setState(() {
+                    lista[index].finalizada = value ?? true;
+                  });
+                },
+              );
+            },
+          );
+        },
       ),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
-        onPressed: () async {
-          await Navigator.of(context).pushNamed('/create');
-          setState(() {
-            lista = TarefaService().read();
-          });
+        onPressed: () {
+          Navigator.of(context).pushNamed('/create');
         },
       ),
     );
