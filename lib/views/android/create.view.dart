@@ -18,7 +18,7 @@ class CreateView extends StatelessWidget {
             onPressed: () {
               if (_formKey.currentState!.validate()) {
                 _formKey.currentState?.save();
-                var tarefa = Tarefa(id: 1, texto: descricao!);
+                var tarefa = Tarefa(texto: descricao!);
                 var service =
                     Provider.of<TarefaService>(context, listen: false);
                 service.create(tarefa);

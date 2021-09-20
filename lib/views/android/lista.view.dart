@@ -31,14 +31,25 @@ class _ListaViewState extends State<ListaView> {
           return ListView.builder(
             itemCount: lista.length,
             itemBuilder: (_, index) {
-              return CheckboxListTile(
-                value: lista[index].finalizada,
-                title: Text(lista[index].texto),
-                onChanged: (value) {
-                  setState(() {
-                    lista[index].finalizada = value ?? true;
-                  });
+              return Dismissible(
+                key: Key(lista[index].id!),
+                background: Container(
+                  color: Colors.red,
+                ),
+                onDismissed: (_) {
+                  var service =
+                      Provider.of<TarefaService>(context, listen: false);
+                  service.delete(lista[index]);
                 },
+                child: CheckboxListTile(
+                  value: lista[index].finalizada,
+                  title: Text(lista[index].texto),
+                  onChanged: (value) {
+                    var service =
+                        Provider.of<TarefaService>(context, listen: false);
+                    service.update(lista[index].id!, value!);
+                  },
+                ),
               );
             },
           );

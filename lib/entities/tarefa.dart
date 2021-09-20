@@ -1,5 +1,5 @@
 class Tarefa {
-  int? id;
+  String? id;
   String texto;
   bool finalizada;
 

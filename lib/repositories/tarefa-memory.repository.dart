@@ -22,6 +22,11 @@ class TarefaMemoryRepository {
     return tarefas;
   }
 
+  void update(String id, bool value) {
+    var index = tarefas.indexWhere((tarefa) => tarefa.id == id);
+    tarefas[index].finalizada = value;
+  }
+
   void delete(Tarefa entity) {
     tarefas.remove(entity);
   }
