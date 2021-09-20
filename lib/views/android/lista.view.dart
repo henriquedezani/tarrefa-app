@@ -3,22 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:tarefas_app/entities/tarefa.dart';
 import 'package:tarefas_app/services/tarefa.service.dart';
 
-class ListaView extends StatefulWidget {
-  @override
-  _ListaViewState createState() => _ListaViewState();
-}
-
-class _ListaViewState extends State<ListaView> {
-  // atributo da classe.
-  // List<Tarefa> lista = [];
-
-  @override
-  initState() {
-    super.initState();
-    // var service = TarefaService();
-    // lista.addAll(service.read());
-  }
-
+class ListaView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,26 +16,8 @@ class _ListaViewState extends State<ListaView> {
           return ListView.builder(
             itemCount: lista.length,
             itemBuilder: (_, index) {
-              return Dismissible(
-                key: Key(lista[index].id!),
-                background: Container(
-                  color: Colors.red,
-                ),
-                onDismissed: (_) {
-                  var service =
-                      Provider.of<TarefaService>(context, listen: false);
-                  service.delete(lista[index]);
-                },
-                child: CheckboxListTile(
-                  value: lista[index].finalizada,
-                  title: Text(lista[index].texto),
-                  onChanged: (value) {
-                    var service =
-                        Provider.of<TarefaService>(context, listen: false);
-                    service.update(lista[index].id!, value!);
-                  },
-                ),
-              );
+              Tarefa tarefa = lista[index];
+              return TarefaItem(tarefa, service);
             },
           );
         },
@@ -59,6 +26,36 @@ class _ListaViewState extends State<ListaView> {
         child: Icon(Icons.add),
         onPressed: () {
           Navigator.of(context).pushNamed('/create');
+        },
+      ),
+    );
+  }
+}
+
+class TarefaItem extends StatelessWidget {
+  const TarefaItem(
+    this.tarefa,
+    this.service,
+  );
+
+  final Tarefa tarefa;
+  final TarefaService service;
+
+  @override
+  Widget build(BuildContext context) {
+    return Dismissible(
+      key: Key(tarefa.id!),
+      background: Container(
+        color: Colors.red,
+      ),
+      onDismissed: (_) {
+        service.delete(tarefa);
+      },
+      child: CheckboxListTile(
+        value: tarefa.finalizada,
+        title: Text(tarefa.texto),
+        onChanged: (value) {
+          service.update(tarefa.id!, value!);
         },
       ),
     );
