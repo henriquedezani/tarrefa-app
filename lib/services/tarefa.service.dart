@@ -1,17 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:tarefas_app/entities/tarefa.dart';
-import 'package:tarefas_app/repositories/tarefa-memory.repository.dart';
+import 'package:tarefas_app/repositories/tarefa-api.repository.dart';
 import 'package:uuid/uuid.dart';
 
 // lógica do negócio ~ BLOC
 class TarefaService extends ChangeNotifier {
-  TarefaMemoryRepository? _repository;
+  TarefaApiRepository? _repository;
+
+  List<Tarefa> tarefas = [];
 
   TarefaService() {
-    _repository = new TarefaMemoryRepository();
+    _repository = new TarefaApiRepository();
+    this.read();
   }
 
-  List<Tarefa> get tarefas => _repository!.read();
+  void read() {
+    _repository!.read().then((value) {
+      tarefas = value;
+      notifyListeners();
+    });
+  }
 
   void create(Tarefa entity) {
     var uuid = Uuid();
