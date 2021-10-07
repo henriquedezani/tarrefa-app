@@ -24,17 +24,24 @@ class TarefaService extends ChangeNotifier {
   void create(Tarefa entity) {
     var uuid = Uuid();
     entity.id = uuid.v4(); // Exemplo: 110ec58a-a0f2-4ac4-8393-c866d813b8d1
-    _repository!.create(entity);
-    notifyListeners();
+    _repository!.create(entity).then((_) {
+      tarefas.add(entity);
+      notifyListeners();
+    });
   }
 
   void update(String id, bool value) {
-    _repository!.update(id, value);
-    notifyListeners();
+    var entity = tarefas.firstWhere((element) => element.id == id);
+    entity.finalizada = value;
+    _repository!.update(id, entity).then((_) {
+      notifyListeners();
+    });
   }
 
   void delete(Tarefa entity) {
-    _repository!.delete(entity);
-    notifyListeners();
+    _repository!.delete(entity).then((_) {
+      tarefas.remove(entity);
+      notifyListeners();
+    });
   }
 }

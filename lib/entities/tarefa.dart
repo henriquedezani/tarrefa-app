@@ -12,4 +12,8 @@ class Tarefa {
       finalizada: json['finalizada'],
     );
   }
+
+  Map<String, dynamic> toJson() {
+    return {"id": id!, "texto": texto, "finalizada": finalizada};
+  }
 }
